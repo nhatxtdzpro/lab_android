@@ -1,30 +1,28 @@
-# Lab 8 · Đăng ký và đăng nhập đơn giản
+# Lab 8 PIZZERIA Firebase Authentication
 
-Ứng dụng chỉ có **đăng ký tài khoản bằng email/mật khẩu, đăng nhập và đăng xuất**. Đăng ký thành công là vào ngay màn hình tài khoản. Không có gửi email xác minh, kiểm tra trạng thái xác minh hoặc quên/đặt lại mật khẩu.
+Dự án lấy từ [HuyNguyenChan/LAB8](https://github.com/HuyNguyenChan/LAB8), commit `1fc6771b5efd472c50b0be7b6a7b7f5fdc534db5`. Giữ nguyên giao diện và logic Sign In, Sign Up và Home của dự án mẫu.
 
-## Cấu hình
+## Firebase của bạn
 
-1. File `app/google-services.json` phải đúng Android package **com.thanhnhat.firebaseauth**.
-2. Trong Firebase Console → Authentication → Sign-in method, bật **Email/Password**.
-3. Build lại sau khi thêm hoặc đổi JSON. Lab 8 không dùng Firestore.
+- Application ID: **com.thanhnhat.firebaseauth**, khớp Android app trong file `app/google-services.json` hiện có trên máy.
+- Namespace và package Kotlin: **com.example.lab8**, giữ theo source gốc. Namespace có thể khác applicationId.
+- Giữ JSON Firebase riêng trong thư mục `app`. File này không được commit lên GitHub.
+- Trong Firebase Console, bật Authentication → Email/Password. Không yêu cầu xác minh email.
 
-## Sử dụng
+## Build
 
-1. Mở app, chọn **Chưa có tài khoản? Đăng ký**.
-2. Nhập email hợp lệ về định dạng và mật khẩu ít nhất 6 ký tự → **Đăng ký**.
-3. App vào ngay màn hình **Đăng nhập thành công**, hiển thị email và nút **Đăng xuất**.
-4. Đăng xuất rồi dùng cùng email/mật khẩu để đăng nhập lại.
-5. Firebase SDK giữ phiên đăng nhập khi đóng/mở app. Mật khẩu không được ghi vào log hoặc saved instance state.
+Dùng Android SDK 36, JDK 17/21. Dự án giữ Android Gradle Plugin 8.13.0, Gradle 8.13 và Kotlin 2.0.21 của bản gốc.
 
-Tài khoản được tạo trong Firebase Authentication, không phải tạo hộp thư Gmail mới. Có thể xem tài khoản tại Authentication → Users trên Firebase Console.
+Chạy `gradlew.bat :app:assembleDebug` trong thư mục lab. Cấu hình SDK trong `local.properties`. Khi clone về máy khác, cần thêm JSON đúng Firebase project trước khi build.
 
-## Build và chạy
+## Luồng sử dụng
 
-Android Studio hoặc VS Code, JDK 17/21, SDK 35, thiết bị API 24+.
+1. Sign In bằng email và mật khẩu.
+2. Sign Up để tạo tài khoản; thành công sẽ chuyển tới Home.
+3. SignOut để quay lại màn hình đăng nhập.
 
-```powershell
-$env:JAVA_HOME = 'C:\Program Files\JetBrains\IntelliJ IDEA 2023.2.5\jbr'
-.\gradlew.bat :app:assembleDebug
-```
+Các biểu tượng Google/Facebook và nút START ORDER giữ theo source mẫu, hiện chưa có chức năng đăng nhập mạng xã hội hoặc đặt hàng.
 
 APK: `app/build/outputs/apk/debug/app-debug.apk`.
+
+Component launcher khi dùng ADB: `com.thanhnhat.firebaseauth/com.example.lab8.MainActivity`.
